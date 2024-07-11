@@ -3,13 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialCartState = {
     isCartVisible:false,
     items:[],
-    totalQuantity:0
+    totalQuantity:0,
+    notification:null
 }
 
 const cartSlice = createSlice({
     name:"cart",
     initialState:initialCartState,
     reducers:{
+        showNotification(state,action){
+               state.notification={ status:action.payload.status,
+                title:action.payload.title,
+                message:action.payload.message
+               }
+        },
         toogle(state){
             state.isCartVisible=!state.isCartVisible
         },
