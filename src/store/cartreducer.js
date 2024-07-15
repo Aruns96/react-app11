@@ -4,7 +4,8 @@ const initialCartState = {
     isCartVisible:false,
     items:[],
     totalQuantity:0,
-    notification:null
+    notification:null,
+    changed:false
 }
 
 const cartSlice = createSlice({
@@ -20,10 +21,15 @@ const cartSlice = createSlice({
         toogle(state){
             state.isCartVisible=!state.isCartVisible
         },
+        replaceCart(state,action){
+             state.totalQuantity = action.payload.totalQuantity;
+             state.items = action.payload.items;
+        },
         addItemToCart(state,action){
             const newItem = action.payload;
             const existingItem = state.items.find(i=>i.id===newItem.id)
             state.totalQuantity++
+            state.changed = true;
             if(!existingItem){
                 state.items.push({
                     id:newItem.id,
@@ -54,6 +60,10 @@ const cartSlice = createSlice({
        
     }
 })
+
+
+
+
 
 export default cartSlice.reducer
 export const cartActions = cartSlice.actions;
